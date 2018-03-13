@@ -1,14 +1,16 @@
 import sys
 from flask import Flask
-from utils.RouteFactory import RouteFactory as rf
+from flask_restful import Resource, Api
+from utils.RouteFactory import getRouteFactory
 import logging
 
+# Import routes
+import routes.UserInfo
+
 app = Flask(__name__)
+api = Api(app)
 
-
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+APP_VERSION = "v1"
 
 
 def loggingInit(app: Flask):
@@ -21,8 +23,14 @@ def loggingInit(app: Flask):
     app.logger.setLevel(logging.INFO)
 
 
+def initMongo():
+    import utils.mongoConnect
+
+
 if __name__ == '__main__':
+    initMongo()
     loggingInit(app)
-    rf.get()
+    getRouteFactory().giveApp(app, api, APP_VERSION)
+    getRouteFactory().register("/user/<string:pseudo>", routes.UserInfo.UserInfo)
 
     app.run(debug=True)
