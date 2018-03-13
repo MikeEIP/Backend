@@ -1,11 +1,12 @@
 import sys
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Api
 from utils.RouteFactory import getRouteFactory
+from utils.getConfig import Config
 import logging
 
 # Import routes
-import routes.UserInfo
+import routes.v1.UserInfo
 
 app = Flask(__name__)
 api = Api(app)
@@ -24,13 +25,14 @@ def loggingInit(app: Flask):
 
 
 def initMongo():
-    import utils.mongoConnect
+    pass
 
 
 if __name__ == '__main__':
+    c = Config("config.json")
     initMongo()
     loggingInit(app)
     getRouteFactory().giveApp(app, api, APP_VERSION)
-    getRouteFactory().register("/user/<string:pseudo>", routes.UserInfo.UserInfo)
+    getRouteFactory().register(routes.v1.UserInfo.UserInfo, "/user/<string:pseudo>")
 
-    app.run(debug=True)
+    app.run(debug=True, host=c.getField("server", "url"), port=c.getFieldAs("int", "server", "port"))

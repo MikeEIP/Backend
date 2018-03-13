@@ -4,9 +4,9 @@ from mongoengine import connect
 
 import structs.UserInfoData
 
-from utils.getConfig import getConfig
+from utils.getConfig import Config
 
-mongoConfig = getConfig("config.json")
+mongoConfig = Config("config.json")
 
 url = mongoConfig.getField("mongo", "url")
 port = int(mongoConfig.getField("mongo", "port"))

@@ -1,7 +1,7 @@
 import json
 
 
-class getConfig:
+class Config:
     def __init__(self, filePath: str):
         self.filePath = filePath
         self.data = ""
@@ -19,4 +19,14 @@ class getConfig:
             return tmp
         except Exception as e:
             print("Cant get field " + field + " " + str(fields) + " error:\n" + str(e))
+            return None
+
+    def getFieldAs(self, typeToConvert: str, field: str, *fields) -> str or None:
+        try:
+            tmp = self.data[field]
+            for ff in fields:
+                tmp = tmp[ff]
+            return eval(typeToConvert + "(" + tmp + ")")
+        except Exception as e:
+            print("Cant get or convert field " + field + " " + str(fields) + " type: " + typeToConvert + " error:\n" + str(e))
             return None
