@@ -1,0 +1,85 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Mike
+
+Official Mike API.
+
+## User Info [/v1/user/{userPseudo}]
+
++ Parameters
+    + userPseudo (string) - Unique identifier (pseudo) of the user
+
+### Get user Info [GET]
+
++ Response 200 (application/json)
+    + Attributes (UserInfo)
+    
++ Response 404 (plain/text)
+
+        User not found
+        
++ Response 403 (plain/text)
+
+        Forbidden to access this user
+
+### Create user info [POST]
+
++ Request (application/json)
+    + Attributes (UserInfo)
+    
++ Response 200 (application/json)
+    + Attributes (UserInfo)
+
++ Response 404 (plain/text)
+
+        User not Found
+
++ Response 403 (plain/text)
+
+        Forbidden to access this user
+
+### Update user info [PUT]
+
++ Request (application/json)
+    + Attributes (UserInfo)
+    
++ Response 200 (application/json)
+    + Attributes (UserInfo)
+
++ Response 404 (plain/text)
+
+        User not Found
+        
++ Response 403 (plain/text)
+
+        Forbidden to access this user
+        
+### Delete user [DELETE]
+
++ Response 200 (plain/text)
+
+        Ok
+
++ Response 404 (plain/text)
+
+        User not Found
+        
++ Response 403 (plain/text)
+
+        Forbidden to access this user
+
+
+## Data Structures
+
+### UserInfo
++ pseudo: theSnoop (string, required)
++ nom: Dog (string, required)
++ prenom: Snoop (string, required)
++ birthday: `1992-11-11T08:40:51.620Z` (string, required)
++ country: France (string, optional)
++ city: Nice (string, optional)
++ language: fr_FR (string, required)
++ xp: 42 (number, required)
++ musclor: 542 (number, required)
++ profilPicture: dimitri_profil.png (string, optional)
