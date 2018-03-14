@@ -52,7 +52,8 @@ def initMongo():
 
 def registerRoutes():
     getRouteFactory().register(routes.v1.UserInfo.UserInfo, "/user/<string:pseudo>")
-    getRouteFactory().registerWithoutVersion(routes.v1.oauth.OauthRoute, "/login")
+    getRouteFactory().register(routes.v1.UserInfo.GeneralUserInfo, "/user")
+    getRouteFactory().register(routes.v1.oauth.OauthRoute, "/login")
 
 
 if __name__ == '__main__':

@@ -1,10 +1,8 @@
-from flask_jwt_extended import (
-    JWTManager, jwt_required, create_access_token,
-    get_jwt_identity
-)
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from flask import Flask, request, jsonify
 from flask_restful import Resource
 from structs.UserInfoData import UserInfoData
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class OauthRoute(Resource):
@@ -18,8 +16,11 @@ class OauthRoute(Resource):
         if not password:
             return "Missing password parameter", 400
         try:
-            d = UserInfoData.objects.get(pseudo=username, password=password)
-            access_token = create_access_token(identity=username)
+            d = UserInfoData.objects.get(pseudo=username)
+
+            if check_password_hash(d.password, password) is False:
+                return "bad password", 401
+            access_token = create_access_token(identity=username, expires_delta=False)
             return {'access_token': access_token}, 200
         except Exception as e:
             return "Bad username or password", 401
