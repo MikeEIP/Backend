@@ -5,10 +5,30 @@ HOST: http://mike.arrogant.space
 
 Official Mike API.
 
+## Authentication [/login]
+Exchange credentials for `access_token`. Supported types:
+
++ `client_credentials`
+
+### Exchange credentials for token [POST]
++ Request (application/json)
+    + Attributes (OAuth grant request)
+
++ Response 200 (application/json)
+    + Attributes (OAuth valid response)
+
+
 ## User Info [/v1/user/{pseudo}]
+
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
 
 + Parameters
     + pseudo (string) - Unique identifier (pseudo) of the user
+
 
 ### Get user Info [GET]
 
@@ -23,7 +43,7 @@ Official Mike API.
 
         Forbidden to access this user
 
-### Create user info [POST]
+### Create account [POST]
 
 + Request (application/json)
     + Attributes (UserInfo)
@@ -70,12 +90,18 @@ Official Mike API.
         Forbidden to access this user
 
 
-## Exercices Info [/v1/exercices]
+## My User Info [/v1/user/me]
 
-### Get Exercices Info [GET]
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
+
+### Get user Info [GET]
 
 + Response 200 (application/json)
-    + Attributes (ExercicesInfo)
+    + Attributes (UserInfo)
     
 + Response 404 (plain/text)
 
@@ -85,20 +111,103 @@ Official Mike API.
 
         Forbidden to access this user
 
-### Create Exercices info [POST]
+
+### Update user info [PUT]
 
 + Request (application/json)
-    + Attributes (ExercicesInfo)
+    + Attributes (UserInfo)
     
 + Response 200 (application/json)
+    + Attributes (UserInfo)
 
 + Response 404 (plain/text)
 
         User not Found
-
+        
 + Response 403 (plain/text)
 
         Forbidden to access this user
+        
+### Delete user [DELETE]
+
++ Response 200 (plain/text)
+
+        Ok
+
++ Response 404 (plain/text)
+
+        User not Found
+        
++ Response 403 (plain/text)
+
+        Forbidden to access this user
+        
+
+## General User Info [/v1/user]
+
+### Get all user Info [GET]
+
+Restricted to admin only
+
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
++ Response 200 (application/json)
+    + Attributes (array)
+        + (UserInfo)
+        + (UserInfo)
+
++ Response 403 (plain/text)
+
+        Forbidden
+
+### Create account [POST]
+
++ Request (application/json)
+    + Attributes (UserInfo)
+    
++ Response 200 (application/json)
+    + Attributes (UserInfo)
+
++ Response 403 (plain/text)
+
+        Forbidden
+
+
+## Trainings [/v1/training]
+
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
+### Get Trainings [GET]
+
++ Response 200 (application/json)
+    + Attributes (array)
+        + (TrainingInfo)
+        + (TrainingInfo)
+    
++ Response 404 (plain/text)
+
+        User not found
+        
++ Response 403 (plain/text)
+
+        Forbidden to access this user
+
+### Return Training [POST]
+
++ Request (application/json)
+    + Attributes (TrainingInfo)
+    
++ Response 200 (application/json)
+
++ Response 403 (plain/text)
+
+        Forbidden
 
 
 ## Data Structures
@@ -122,3 +231,14 @@ Official Mike API.
 + Time: 4:10 (string, required)
 + date: `2018-11-11T08:40:51.620Z` (string, required)
 + Id: 1 (number, required)
+
+###TrainingInfo
++ id: 25 (number, required)
++ exercices: ExercicesInfo, ExercicesInfo (array[ExercicesInfo], required)
+
+### OAuth grant request (object)
++ username: theSnoop (string, required)
++ password: thePass (string, required)
+
+### OAuth valid response (object)
++ access_token: `eyJhbGciOiJIUzI1NiJ9.e30.XmNK3GpH3Ys_7wsYBfq4C3M6goz71I7dTgUkuIa5lyQ` (string, required) - valid JWT
