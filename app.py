@@ -1,26 +1,25 @@
 import os
-
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
-os.environ['DEBUG'] = 'true'
-
 import sys
 from flask import Flask
 from flask_restful import Api
 from utils.getConfig import Config
 import logging
-from flask_jwt_extended import (
-    JWTManager, jwt_required, create_access_token,
-    get_jwt_identity
-)
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 
 # Var
 import app_var
 
+# Get config
+app_var.CONFIG_PATH = "config.json"
+
+if len(sys.argv) > 1:
+    app_var.CONFIG_PATH = sys.argv[1]
+
 app_var.app = Flask(__name__)
-c = Config("config.json")
+c = Config(app_var.CONFIG_PATH)
 app_var.app.config['SECRET_KEY'] = c.getField("security", "secret-key")
 
-#Mongo
+# Mongo
 import utils.mongoConnect
 
 # Oauth
@@ -50,22 +49,55 @@ def loggingInit(app: Flask):
 
 
 def initMongo():
-    pass  # TODO
+    utils.mongoConnect.connectToMongo()
 
 
 def registerRoutes():
+    print("\n===== ROUTES =====")
     getRouteFactory().register(routes.v1.UserInfo.UserInfo, "/user/<string:pseudo>")
     getRouteFactory().register(routes.v1.UserInfo.GeneralUserInfo, "/user")
     getRouteFactory().register(routes.v1.oauth.OauthRoute, "/login")
     getRouteFactory().register(routes.v1.Trainings.Tranings, "/trainings")
+    print("")
+
+
+def initDebug(config: Config) -> bool:
+    isDebug = config.getField("isDebug")
+    if isDebug:
+        os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
+        os.environ['DEBUG'] = 'true'
+    else:
+        os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'false'
+        os.environ['DEBUG'] = 'false'
+    return isDebug
+
+
+def getPortAndUrl(config: Config) -> (str, int):
+    config_url = config.getField("server", "url")
+    config_port = config.getFieldAs("int", "server", "port")
+
+    tmpStr = "{\n\"server\": {\n\"url\": \"0.0.0.0\",\n\"port\": \"5000\"\n}\n}"
+
+    if config_url is None:
+        raise RuntimeError("Url not defined, define it in config.json file or specify config as first argument when "
+                           "calling the script. "
+                           "\nDefine it like this:\n" + tmpStr)
+
+    if config_port is None:
+        raise RuntimeError("Port not defined, define it in config.json file or specify config as first argument when "
+                           "calling the script. "
+                           "\nDefine it like this:\n" + tmpStr)
+    return config_url, config_port
 
 
 if __name__ == '__main__':
-    c = Config("config.json")
+    c = Config(app_var.CONFIG_PATH)
+    d = initDebug(c)
     initMongo()
     loggingInit(app_var.app)
     getRouteFactory().giveApp(app_var.app, app_var.api, APP_VERSION)
 
     registerRoutes()
 
-    app_var.app.run(debug=True, host=c.getField("server", "url"), port=c.getFieldAs("int", "server", "port"))
+    url, port = getPortAndUrl(c)
+    app_var.app.run(debug=d, host=url, port=port)

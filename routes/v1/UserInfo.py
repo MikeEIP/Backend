@@ -6,10 +6,7 @@ from flask_jwt_extended import jwt_required
 from utils.mongoUtils import update_document
 from werkzeug.security import generate_password_hash, check_password_hash
 from dateutil import parser
-from flask_jwt_extended import (
-    JWTManager, jwt_required, create_access_token,
-    get_jwt_identity
-)
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 
 import json
 from utils.returnJSON import returnJSON

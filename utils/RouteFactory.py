@@ -33,7 +33,7 @@ class RouteFactory(object, metaclass=SingletonType):
             for opt in optionnalPath:
                 tmp = " /" + self.version + opt
 
-            self.app.logger.info("Adding route " + path + tmp)
+            self.app.logger.info("\tAdding route " + path + tmp)
             self.routes[path] = cl
             self.api.add_resource(cl, path, *optionnalPath)
 
@@ -53,7 +53,7 @@ class RouteFactory(object, metaclass=SingletonType):
             for opt in optionnalPath:
                 tmp = " " + opt
 
-            self.app.logger.info("Adding route " + path + tmp)
+            self.app.logger.info("\tAdding route " + path + tmp)
             self.routes[path] = cl
             self.api.add_resource(cl, path, *optionnalPath)
 

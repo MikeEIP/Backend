@@ -1,5 +1,5 @@
 {
-  "isDebug": true,
+  "isDebug": false,
   "server": {
     "url": "0.0.0.0",
     "port": "5000"

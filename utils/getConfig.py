@@ -6,12 +6,12 @@ class Config:
         self.filePath = filePath
         self.data = ""
         try:
-            self.data = json.load(open('config.json'))
+            self.data = json.load(open(filePath))
         except Exception as e:
             print("Can't load or parse file " + filePath + "\nerror:\n" + str(e))
             raise e
 
-    def getField(self, field: str, *fields) -> str or None:
+    def getField(self, field: str, *fields) -> str or None or bool:
         try:
             tmp = self.data[field]
             for ff in fields:
