@@ -1,3 +1,4 @@
 #!/bin/sh
 
-python3 app.py
+export FLASK_APP=app.py
+flaks run
