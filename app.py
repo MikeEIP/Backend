@@ -12,7 +12,6 @@ from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
     get_jwt_identity
 )
-import utils.mongoConnect
 
 # Var
 import app_var
@@ -20,6 +19,9 @@ import app_var
 app_var.app = Flask(__name__)
 c = Config("config.json")
 app_var.app.config['SECRET_KEY'] = c.getField("security", "secret-key")
+
+#Mongo
+import utils.mongoConnect
 
 # Oauth
 import routes.v1.oauth

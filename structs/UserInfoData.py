@@ -14,5 +14,7 @@ class UserInfoData(Document):
     xp = IntField(required=True, default=0)
     musclor = IntField(required=True, default=0)
     profilPicture = StringField(required=False)
+    friends = ListField(StringField(required=False), required=False)
+    friendsWaitingList = ListField(StringField(required=False), required=False)
 
     meta = {'collection': 'users'}

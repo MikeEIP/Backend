@@ -8,7 +8,7 @@ class Config:
         try:
             self.data = json.load(open('config.json'))
         except Exception as e:
-            print("Can't load or parse file " + filePath + "error:\n" + str(e))
+            print("Can't load or parse file " + filePath + "\nerror:\n" + str(e))
             raise e
 
     def getField(self, field: str, *fields) -> str or None:
@@ -18,7 +18,7 @@ class Config:
                 tmp = tmp[ff]
             return tmp
         except Exception as e:
-            print("Cant get field " + field + " " + str(fields) + " error:\n" + str(e))
+            print("Cant get field " + field + " " + str(fields) + "\nerror:\n" + str(e))
             return None
 
     def getFieldAs(self, typeToConvert: str, field: str, *fields) -> str or None:
