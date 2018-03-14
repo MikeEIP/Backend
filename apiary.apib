@@ -1,14 +1,14 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://mike.arrogant.space
 
 # Mike
 
 Official Mike API.
 
-## User Info [/v1/user/{userPseudo}]
+## User Info [/v1/user/{pseudo}]
 
 + Parameters
-    + userPseudo (string) - Unique identifier (pseudo) of the user
+    + pseudo (string) - Unique identifier (pseudo) of the user
 
 ### Get user Info [GET]
 
@@ -70,6 +70,37 @@ Official Mike API.
         Forbidden to access this user
 
 
+## Exercices Info [/v1/exercices]
+
+### Get Exercices Info [GET]
+
++ Response 200 (application/json)
+    + Attributes (ExercicesInfo)
+    
++ Response 404 (plain/text)
+
+        User not found
+        
++ Response 403 (plain/text)
+
+        Forbidden to access this user
+
+### Create Exercices info [POST]
+
++ Request (application/json)
+    + Attributes (ExercicesInfo)
+    
++ Response 200 (application/json)
+
++ Response 404 (plain/text)
+
+        User not Found
+
++ Response 403 (plain/text)
+
+        Forbidden to access this user
+
+
 ## Data Structures
 
 ### UserInfo
@@ -83,3 +114,11 @@ Official Mike API.
 + xp: 42 (number, required)
 + musclor: 542 (number, required)
 + profilPicture: dimitri_profil.png (string, optional)
+
+### ExercicesInfo
++ Exercise: pompe (string, required)
++ Difficulty: 6 (number, required)
++ Finished: Yes (string, required)
++ Time: 4:10 (string, required)
++ date: `2018-11-11T08:40:51.620Z` (string, required)
++ Id: 1 (number, required)
