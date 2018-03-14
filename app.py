@@ -1,15 +1,37 @@
+import os
+
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
+os.environ['DEBUG'] = 'true'
+
 import sys
 from flask import Flask
 from flask_restful import Api
-from utils.RouteFactory import getRouteFactory
 from utils.getConfig import Config
 import logging
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
+)
+import utils.mongoConnect
+
+# Var
+import app_var
+
+app_var.app = Flask(__name__)
+c = Config("config.json")
+app_var.app.config['SECRET_KEY'] = c.getField("security", "secret-key")
+
+# Oauth
+import routes.v1.oauth
+
+app_var.oauth = JWTManager(app_var.app)
+
+# Api Restfull
+app_var.api = Api(app_var.app)
 
 # Import routes
+from utils.RouteFactory import getRouteFactory
 import routes.v1.UserInfo
-
-app = Flask(__name__)
-api = Api(app)
 
 APP_VERSION = "v1"
 
@@ -25,14 +47,20 @@ def loggingInit(app: Flask):
 
 
 def initMongo():
-    pass
+    pass  # TODO
+
+
+def registerRoutes():
+    getRouteFactory().register(routes.v1.UserInfo.UserInfo, "/user/<string:pseudo>")
+    getRouteFactory().registerWithoutVersion(routes.v1.oauth.OauthRoute, "/login")
 
 
 if __name__ == '__main__':
     c = Config("config.json")
     initMongo()
-    loggingInit(app)
-    getRouteFactory().giveApp(app, api, APP_VERSION)
-    getRouteFactory().register(routes.v1.UserInfo.UserInfo, "/user/<string:pseudo>")
+    loggingInit(app_var.app)
+    getRouteFactory().giveApp(app_var.app, app_var.api, APP_VERSION)
 
-    app.run(debug=True, host=c.getField("server", "url"), port=c.getFieldAs("int", "server", "port"))
+    registerRoutes()
+
+    app_var.app.run(debug=True, host=c.getField("server", "url"), port=c.getFieldAs("int", "server", "port"))

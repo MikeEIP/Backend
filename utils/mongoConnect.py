@@ -1,9 +1,5 @@
 import datetime
-
 from mongoengine import connect
-
-import structs.UserInfoData
-
 from utils.getConfig import Config
 
 mongoConfig = Config("config.json")
@@ -15,10 +11,12 @@ print("Connecting to mongo: " + url + ":" + str(port))
 
 connect('mike', host=url, port=port)
 
-# #Test
+# # #Test
+# import structs.UserInfoData
 #
 # dimitri = structs.UserInfoData.UserInfoData()
 # dimitri.pseudo = "dimitri"
+# dimitri.password = "pass"
 # dimitri.nom = "Wyzlic"
 # dimitri.prenom = "Dimitri"
 # dimitri.email = "dimitriwyzlic@gmail.com"

@@ -7,5 +7,8 @@
     "url": "localhost",
     "port": 27017,
     "password": ""
+  },
+  "security": {
+    "secret-key": "THIS IS SPARTA"
   }
 }

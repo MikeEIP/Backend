@@ -37,6 +37,26 @@ class RouteFactory(object, metaclass=SingletonType):
             self.routes[path] = cl
             self.api.add_resource(cl, path, *optionnalPath)
 
+    def registerWithoutVersion(self, cl: Resource, path: str, *optionnalPath):
+        if path in self.routes:
+            raise Exception("Route Already exist " + path)  # Replace by log
+
+        for opt in optionnalPath:
+            if opt in self.routes or opt == path:
+                raise Exception("Route Already exist " + opt)  # Replace by log
+
+        for opt in optionnalPath:
+            self.routes[opt] = cl
+
+        else:
+            tmp = ""
+            for opt in optionnalPath:
+                tmp = " " + opt
+
+            self.app.logger.info("Adding route " + path + tmp)
+            self.routes[path] = cl
+            self.api.add_resource(cl, path, *optionnalPath)
+
     def giveApp(self, app: Flask, api: Api, version: str):
         self.app = app
         self.api = api
