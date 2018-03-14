@@ -11,6 +11,27 @@ print("Connecting to mongo: " + url + ":" + str(port))
 
 connect('mike', host=url, port=port)
 
+"""
+import structs.ExercicesInfoData
+
+exo = structs.ExercicesInfoData.ExercicesInfoData()
+exo.date = datetime.datetime.now()
+exo.exercise = "pompe"
+exo.difficulty = 4
+exo.finished = "yes"
+#exo.id = 1
+exo.time = datetime.datetime.now()
+
+exo.save()
+
+trainings = structs.ExercicesInfoData.Trainings()
+trainings.exercices.append(exo)
+trainings.exercices.append(exo)
+trainings.exercices.append(exo)
+
+trainings.save()
+"""
+
 # # #Test
 # import structs.UserInfoData
 #
@@ -23,3 +44,5 @@ connect('mike', host=url, port=port)
 # dimitri.birthday = datetime.datetime.now()
 #
 # dimitri.save()
+
+

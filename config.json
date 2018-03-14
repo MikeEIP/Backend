@@ -4,7 +4,7 @@
     "port": "5000"
   },
   "mongo": {
-    "url": "localhost",
+    "url": "arrogant.space",
     "port": 27017,
     "password": ""
   },

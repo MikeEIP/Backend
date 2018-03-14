@@ -34,6 +34,7 @@ app_var.api = Api(app_var.app)
 # Import routes
 from utils.RouteFactory import getRouteFactory
 import routes.v1.UserInfo
+import routes.v1.Trainings
 
 APP_VERSION = "v1"
 
@@ -56,6 +57,7 @@ def registerRoutes():
     getRouteFactory().register(routes.v1.UserInfo.UserInfo, "/user/<string:pseudo>")
     getRouteFactory().register(routes.v1.UserInfo.GeneralUserInfo, "/user")
     getRouteFactory().register(routes.v1.oauth.OauthRoute, "/login")
+    getRouteFactory().register(routes.v1.Trainings.Tranings, "/trainings")
 
 
 if __name__ == '__main__':
