@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://mike.arrogant.space
+HOST: http://mike.arrogant.space/v1
 
 # Mike
 
@@ -18,7 +18,7 @@ Exchange credentials for `access_token`. Supported types:
     + Attributes (OAuth valid response)
 
 
-## User Info [/v1/user/{pseudo}]
+## User Info [/user/{pseudo}]
 
 + Request
     + Headers
@@ -90,7 +90,7 @@ Exchange credentials for `access_token`. Supported types:
         Forbidden to access this user
 
 
-## My User Info [/v1/user/me]
+## My User Info [/user/me]
 
 + Request
     + Headers
@@ -143,7 +143,7 @@ Exchange credentials for `access_token`. Supported types:
         Forbidden to access this user
         
 
-## General User Info [/v1/user]
+## General User Info [/user]
 
 ### Get all user Info [GET]
 
@@ -176,7 +176,7 @@ Restricted to admin only
         Forbidden
 
 
-## Trainings [/v1/training]
+## Trainings [/training]
 
 + Request
     + Headers
@@ -214,18 +214,21 @@ Restricted to admin only
 
 ### UserInfo
 + pseudo: theSnoop (string, required)
-+ nom: Dog (string, required)
-+ prenom: Snoop (string, required)
++ name: Dog (string, required)
++ firstname: Snoop (string, required)
 + birthday: `1992-11-11T08:40:51.620Z` (string, required)
 + country: France (string, optional)
 + city: Nice (string, optional)
-+ language: fr_FR (string, required)
++ lang age: fr_FR (string, required)
 + xp: 42 (number, required)
 + musclor: 542 (number, required)
 + profilPicture: dimitri_profil.png (string, optional)
 
 ### ExercicesInfo
 + exercise: pompe (string, required)
++ repetition: 10 (number, optional)
++ series: 4 (number, optional)
++ weight: 3 (number, optional)
 + difficulty: 6 (number, required)
 + finished: Yes (string, required)
 + time: 4:10 (string, required)
