@@ -1,4 +1,4 @@
-from mongoengine import *
+from mongoengine import Document, StringField, IntField, DateTimeField, ListField, ReferenceField
 
 
 class ExercicesInfoData(Document):
@@ -7,9 +7,10 @@ class ExercicesInfoData(Document):
     finished = StringField(required=True)
     time = DateTimeField(required=True)
     date = DateTimeField(required=True)
-#    id= IntField(required=True)
+    #    id= IntField(required=True)
 
     meta = {'collection': 'exercices'}
+
 
 class Trainings(Document):
     exercices = ListField(ReferenceField(ExercicesInfoData))
