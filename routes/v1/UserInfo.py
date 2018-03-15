@@ -25,19 +25,24 @@ class UserInfo(Resource):
             abort(403)
 
     def delete(self, username):
+        app_var.app.logger.info("User " + username + " to delete")
         return "TODO"
 
 
 class MyUserInfo(Resource):
     @jwt_required
     def get(self):
-        pass
         try:
             d = UserInfoData.objects.get(username=get_jwt_identity())
             return returnJSON(d)
         except Exception as e:
             app_var.app.logger.info(str(e))
             abort(403)
+
+    @jwt_required
+    def delete(self):
+        app_var.app.logger.info("User " + get_jwt_identity() + " try to delete himself")
+        return "TODO"
 
 
 class GeneralUserInfo(Resource):
@@ -46,7 +51,7 @@ class GeneralUserInfo(Resource):
         try:
             AdminInfoData.objects.get(username=get_jwt_identity())
             return returnJSON(UserInfoData.objects.all())
-        except:
+        except Exception as e:
             abort(403)
 
     def post(self):
@@ -57,19 +62,19 @@ class GeneralUserInfo(Resource):
 
         try:
             json_data = request.get_json(force=True)
-        except:
+        except Exception as e:
             return "Failed to parse json", 403
 
         newUser = UserInfoData()
 
         try:
             json_data["username"]
-        except:
+        except Exception as e:
             return "Username field not found", 403
         try:
-            d = UserInfoData.objects.get(username=json_data["username"])
+            UserInfoData.objects.get(username=json_data["username"])
             return "User already exist", 403
-        except:
+        except Exception as e:
             try:
                 update_document(newUser, json_data)
             except Exception as e:
@@ -80,7 +85,7 @@ class GeneralUserInfo(Resource):
 
             try:
                 newUser.save()
-            except:
+            except Exception as e:
                 return "User already exist or another error", 403
 
             app_var.app.logger.info("New user: " + json_data["username"])
