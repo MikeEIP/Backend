@@ -18,7 +18,8 @@ if len(sys.argv) > 1:
 app_var.app = Flask(__name__)
 c = Config(app_var.CONFIG_PATH)
 app_var.app.config['SECRET_KEY'] = c.getField("security", "secret-key")
-app_var.app.config['PROPAGATE_EXCEPTIONS'] = True
+app_var.app.config['PROPAGATE_EXCEPTIONS'] = True  # In no debug mode, exceptions throw internal error du to
+# flaskrestful bug
 
 # Mongo
 import utils.mongoConnect
@@ -59,6 +60,7 @@ def registerRoutes():
     getRouteFactory().register(routes.v1.UserInfo.GeneralUserInfo, "/user")
     getRouteFactory().register(routes.v1.oauth.OauthRoute, "/login")
     getRouteFactory().register(routes.v1.Trainings.Tranings, "/trainings")
+    getRouteFactory().register(routes.v1.UserInfo.MyUserInfo, "/user/me")
     print("")
 
 

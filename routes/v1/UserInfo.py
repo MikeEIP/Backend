@@ -22,15 +22,23 @@ class UserInfo(Resource):
 
             return returnJSON(d)
         except Exception as e:
-            print(str(e))
+            app_var.app.logger.info(str(e))
             abort(403)
 
-    def post(self, pseudo):
-        return jsonify(salut="BONJOUR")
-        # json_data = request.get_json(force=True)
-        # newUser = UserInfoData()
-        # newUser.nom =
+    def delete(self, pseudo):
         return "TODO"
+
+
+class MyUserInfo(Resource):
+    @jwt_required
+    def get(self):
+        pass
+        try:
+            d = UserInfoData.objects.get(pseudo=get_jwt_identity())
+            return returnJSON(d)
+        except Exception as e:
+            app_var.app.logger.info(str(e))
+            abort(403)
 
 
 class GeneralUserInfo(Resource):
