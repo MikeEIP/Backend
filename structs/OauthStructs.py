@@ -3,7 +3,7 @@
 #
 # class OauthUserData(Document):
 #     id = IntField(required=True, primary_key=True)
-#     pseudo = StringField(required=True, unique=True, null=False)
+#     username = StringField(required=True, unique=True, null=False)
 #
 #     meta = {'collection': 'oauth_users'}
 #

@@ -14,18 +14,18 @@ from utils.returnJSON import returnJSON
 
 class UserInfo(Resource):
     @jwt_required
-    def get(self, pseudo):
+    def get(self, username):
         print("YOU ARE " + get_jwt_identity())
         try:
             # Verify user is friend (TODO friend)
-            d = UserInfoData.objects.get(pseudo=pseudo)
+            d = UserInfoData.objects.get(username=username)
 
             return returnJSON(d)
         except Exception as e:
             app_var.app.logger.info(str(e))
             abort(403)
 
-    def delete(self, pseudo):
+    def delete(self, username):
         return "TODO"
 
 
@@ -34,7 +34,7 @@ class MyUserInfo(Resource):
     def get(self):
         pass
         try:
-            d = UserInfoData.objects.get(pseudo=get_jwt_identity())
+            d = UserInfoData.objects.get(username=get_jwt_identity())
             return returnJSON(d)
         except Exception as e:
             app_var.app.logger.info(str(e))
@@ -61,11 +61,11 @@ class GeneralUserInfo(Resource):
         newUser = UserInfoData()
 
         try:
-            json_data["pseudo"]
+            json_data["username"]
         except:
-            return "Pseudo field not found", 403
+            return "Username field not found", 403
         try:
-            d = UserInfoData.objects.get(pseudo=json_data["pseudo"])
+            d = UserInfoData.objects.get(username=json_data["username"])
             return "User already exist", 403
         except:
             update_document(newUser, json_data)
@@ -73,5 +73,5 @@ class GeneralUserInfo(Resource):
             newUser.birthday = parser.parse(json_data["birthday"])
             newUser.save()
 
-            app_var.app.logger.info("New user: " + json_data["pseudo"])
+            app_var.app.logger.info("New user: " + json_data["username"])
         return returnJSON(d)

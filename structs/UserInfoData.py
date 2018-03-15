@@ -2,7 +2,7 @@ from mongoengine import *
 
 
 class UserInfoData(Document):
-    pseudo = StringField(required=True, unique=True)
+    username = StringField(required=True, unique=True)
     password = StringField(required=True)
     email = StringField(required=True)
     nom = StringField(required=True)

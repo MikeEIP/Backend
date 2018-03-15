@@ -10,6 +10,7 @@ from utils.mongoUtils import update_document
 from werkzeug.security import generate_password_hash, check_password_hash
 from dateutil import parser
 
+
 class Tranings(Resource):
     @jwt_required
     def get(self):
@@ -25,11 +26,11 @@ class Tranings(Resource):
         newTraining = ExercicesInfoData()
 
         try:
-            json_data["pseudo"]
+            json_data["username"]
         except:
             return "Failed to parse json", 403
         try:
-            d = UserInfoData.objects.get(pseudo=json_data["pseudo"])
+            d = UserInfoData.objects.get(pseudo=json_data["username"])
             return "User already exist", 403
         except:
             update_document(newTraining, json_data)

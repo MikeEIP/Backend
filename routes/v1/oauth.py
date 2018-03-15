@@ -20,7 +20,7 @@ class OauthRoute(Resource):
             app_var.app.logger.info("User tried to connect but not provide password")
             return "Missing password parameter", 400
         try:
-            d = UserInfoData.objects.get(pseudo=username)
+            d = UserInfoData.objects.get(username=username)
 
             if check_password_hash(d.password, password) is False:
                 app_var.app.logger.info("User tried to connect but provide bad password, username was " + username +

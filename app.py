@@ -56,7 +56,7 @@ def initMongo():
 
 def registerRoutes():
     print("\n===== ROUTES =====")
-    getRouteFactory().register(routes.v1.UserInfo.UserInfo, "/user/<string:pseudo>")
+    getRouteFactory().register(routes.v1.UserInfo.UserInfo, "/user/<string:username>")
     getRouteFactory().register(routes.v1.UserInfo.GeneralUserInfo, "/user")
     getRouteFactory().register(routes.v1.oauth.OauthRoute, "/login")
     getRouteFactory().register(routes.v1.Trainings.Tranings, "/trainings")

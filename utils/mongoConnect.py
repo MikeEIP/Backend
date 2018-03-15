@@ -56,7 +56,7 @@ trainings.save()
 # import structs.UserInfoData
 #
 # dimitri = structs.UserInfoData.UserInfoData()
-# dimitri.pseudo = "dimitri"
+# dimitri.username = "dimitri"
 # dimitri.password = "pass"
 # dimitri.nom = "Wyzlic"
 # dimitri.prenom = "Dimitri"
