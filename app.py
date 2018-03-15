@@ -4,7 +4,7 @@ from flask import Flask
 from flask_restful import Api
 from utils.getConfig import Config
 import logging
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from flask_jwt_extended import JWTManager
 
 # Var
 import app_var

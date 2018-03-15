@@ -1,15 +1,14 @@
-from flask import Flask, jsonify, request, abort, make_response, Response
-from flask_restful import Resource, Api
+from flask import request, abort
+from flask_restful import Resource
 from structs.UserInfoData import UserInfoData
 import app_var
-from flask_jwt_extended import jwt_required
 from utils.mongoUtils import update_document
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from dateutil import parser
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
-import json
 from utils.returnJSON import returnJSON
+from structs.AdminData import AdminInfoData
 
 
 class UserInfo(Resource):
@@ -44,8 +43,11 @@ class MyUserInfo(Resource):
 class GeneralUserInfo(Resource):
     @jwt_required
     def get(self):
-        # TODO
-        abort(403)
+        try:
+            AdminInfoData.objects.get(username=get_jwt_identity())
+            return returnJSON(UserInfoData.objects.all())
+        except:
+            abort(403)
 
     def post(self):
         """
