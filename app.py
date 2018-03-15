@@ -18,6 +18,7 @@ if len(sys.argv) > 1:
 app_var.app = Flask(__name__)
 c = Config(app_var.CONFIG_PATH)
 app_var.app.config['SECRET_KEY'] = c.getField("security", "secret-key")
+app_var.app.config['PROPAGATE_EXCEPTIONS'] = True
 
 # Mongo
 import utils.mongoConnect
