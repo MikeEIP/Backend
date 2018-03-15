@@ -33,26 +33,22 @@ Exchange credentials for `access_token`. Supported types:
 
 + Response 200 (application/json)
     + Attributes (UserInfo)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
     
-+ Response 404 (plain/text)
-
-        User not found
-        
-+ Response 403 (plain/text)
-
         Forbidden to access this user
 
 ### Delete user [DELETE]
 
-+ Response 200 (plain/text)
++ Response 200 (application/json)
 
-        Ok
++ Response 404 (application/json)
+    + Attributes (Error message)
 
-+ Response 404 (plain/text)
-
-        User not Found
-        
-+ Response 403 (plain/text)
++ Response 401 (plain/text)
 
         Forbidden to access this user
 
@@ -69,12 +65,11 @@ Exchange credentials for `access_token`. Supported types:
 
 + Response 200 (application/json)
     + Attributes (UserInfo)
-    
-+ Response 404 (plain/text)
 
-        User not found
-        
-+ Response 403 (plain/text)
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
 
         Forbidden to access this user
 
@@ -83,32 +78,30 @@ Exchange credentials for `access_token`. Supported types:
 
 + Request (application/json)
     + Attributes (UserInfo)
-    
+
 + Response 200 (application/json)
     + Attributes (UserInfo)
 
-+ Response 404 (plain/text)
++ Response 404 (application/json)
+    + Attributes (Error message)
 
-        User not Found
-        
-+ Response 403 (plain/text)
++ Response 401 (plain/text)
 
         Forbidden to access this user
-        
+
 ### Delete me [DELETE]
 
-+ Response 200 (plain/text)
++ Response 200 (application/json)
 
         Ok
 
-+ Response 404 (plain/text)
++ Response 404 (application/json)
+    + Attributes (Error message)
 
-        User not Found
-        
-+ Response 403 (plain/text)
++ Response 401 (plain/text)
 
         Forbidden to access this user
-        
+
 
 ## General User Info [/user]
 
@@ -126,7 +119,7 @@ Restricted to admin only
         + (UserInfo)
         + (UserInfo)
 
-+ Response 403 (plain/text)
++ Response 401 (plain/text)
 
         Forbidden
 
@@ -134,13 +127,69 @@ Restricted to admin only
 
 + Request (application/json)
     + Attributes (UserInfo)
-    
+        + password: thePass (string)
+
 + Response 200 (application/json)
     + Attributes (UserInfo)
 
-+ Response 403 (plain/text)
++ Response 401 (plain/text)
 
         Forbidden
+
+
+## Friends [/friends]
+
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
+
+### Get my friends [GET]
+
++ Response 200 (application/json)
+    + Attributes (array)
+        +Attributes (UserInfo)
+        +Attributes (UserInfo)
+        +Attributes (UserInfo)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
+
+
+### Add a friend [PUT]
+
++ Request (application/json)
+    + Attributes
+        + user: dimitri (string)
+
++ Response 200 (application/json)
+    + Attributes (UserInfo)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
+
+### Delete a friend [DELETE]
+
++ Request (application/json)
+    + Attributes
+        + user: dimitri (string)
+
++ Response 200 (application/json)
+
+        Ok
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
 
 
 ## Trainings [/training]
@@ -156,12 +205,11 @@ Restricted to admin only
     + Attributes (array)
         + (TrainingInfo)
         + (TrainingInfo)
-    
-+ Response 404 (plain/text)
 
-        User not found
-        
-+ Response 403 (plain/text)
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
 
         Forbidden to access this user
 
@@ -169,24 +217,28 @@ Restricted to admin only
 
 + Request (application/json)
     + Attributes (TrainingInfo)
-    
+
 + Response 200 (application/json)
 
-+ Response 403 (plain/text)
++ Response 401 (plain/text)
 
         Forbidden
 
 
 ## Data Structures
 
+### Error message
++ reason: User not found (string, required)
+
 ### UserInfo
 + username: theSnoop (string, required)
-+ name: Dog (string, required)
++ lastname: Dog (string, required)
 + firstname: Snoop (string, required)
++ email: snoopy_doggydoggy@weed.com (string, required)
 + birthday: `1992-11-11T08:40:51.620Z` (string, required)
 + country: France (string, optional)
 + city: Nice (string, optional)
-+ lang age: fr_FR (string, required)
++ language: fr_FR (string, required)
 + xp: 42 (number, required)
 + musclor: 542 (number, required)
 + profilPicture: dimitri_profil.png (string, optional)
