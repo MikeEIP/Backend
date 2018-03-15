@@ -71,7 +71,11 @@ class GeneralUserInfo(Resource):
             update_document(newUser, json_data)
             newUser.password = generate_password_hash(json_data["password"])
             newUser.birthday = parser.parse(json_data["birthday"])
-            newUser.save()
+
+            try:
+                newUser.save()
+            except:
+                return "User already exist or another error", 403
 
             app_var.app.logger.info("New user: " + json_data["username"])
         return returnJSON(d)
