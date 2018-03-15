@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://mike.arrogant.space/v1
+HOST: https://mike.arrogant.space/v1
 
 # Mike
 
@@ -42,22 +42,6 @@ Exchange credentials for `access_token`. Supported types:
 
         Forbidden to access this user
 
-### Create account [POST]
-
-+ Request (application/json)
-    + Attributes (UserInfo)
-    
-+ Response 200 (application/json)
-    + Attributes (UserInfo)
-
-+ Response 404 (plain/text)
-
-        User not Found
-
-+ Response 403 (plain/text)
-
-        Forbidden to access this user
-
 ### Delete user [DELETE]
 
 + Response 200 (plain/text)
@@ -81,7 +65,7 @@ Exchange credentials for `access_token`. Supported types:
             Authentication: Bearer JWT
 
 
-### Get user Info [GET]
+### Get my Info [GET]
 
 + Response 200 (application/json)
     + Attributes (UserInfo)
@@ -95,7 +79,7 @@ Exchange credentials for `access_token`. Supported types:
         Forbidden to access this user
 
 
-### Update user info [PUT]
+### Update my info [PUT]
 
 + Request (application/json)
     + Attributes (UserInfo)
@@ -111,7 +95,7 @@ Exchange credentials for `access_token`. Supported types:
 
         Forbidden to access this user
         
-### Delete user [DELETE]
+### Delete me [DELETE]
 
 + Response 200 (plain/text)
 
