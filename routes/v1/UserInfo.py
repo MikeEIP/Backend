@@ -68,7 +68,11 @@ class GeneralUserInfo(Resource):
             d = UserInfoData.objects.get(username=json_data["username"])
             return "User already exist", 403
         except:
-            update_document(newUser, json_data)
+            try:
+                update_document(newUser, json_data)
+            except Exception as e:
+                app_var.app.logger.info("update document failed " + str(e))
+                return "Not enough field or bad field provided", 400
             newUser.password = generate_password_hash(json_data["password"])
             newUser.birthday = parser.parse(json_data["birthday"])
 
@@ -78,4 +82,4 @@ class GeneralUserInfo(Resource):
                 return "User already exist or another error", 403
 
             app_var.app.logger.info("New user: " + json_data["username"])
-        return returnJSON(d)
+        return returnJSON(newUser)
