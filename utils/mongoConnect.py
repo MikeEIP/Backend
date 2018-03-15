@@ -1,10 +1,5 @@
-import datetime
 import mongoengine.connection
-from mongoengine import *
-from mongoengine.connection import *
-from mongoengine.connection import (MongoEngineConnectionError, get_db,
-                                    get_connection)
-from pip._vendor.requests.packages.urllib3.util import timeout
+from mongoengine.connection import connect
 
 from utils.getConfig import Config
 import app_var
@@ -32,36 +27,36 @@ def connectToMongo():
         sys.exit(1)
 
 
-"""
-import structs.ExercicesInfoData
-
-exo = structs.ExercicesInfoData.ExercicesInfoData()
-exo.date = datetime.datetime.now()
-exo.exercise = "pompe"
-exo.difficulty = 4
-exo.finished = "yes"
-#exo.id = 1
-exo.time = datetime.datetime.now()
-
-exo.save()
-
-trainings = structs.ExercicesInfoData.Trainings()
-trainings.exercices.append(exo)
-trainings.exercices.append(exo)
-trainings.exercices.append(exo)
-
-trainings.save()
-
-# # #Test
-# import structs.UserInfoData
+# """
+# import structs.ExercicesInfoData
 #
-# dimitri = structs.UserInfoData.UserInfoData()
-# dimitri.username = "dimitri"
-# dimitri.password = "pass"
-# dimitri.nom = "Wyzlic"
-# dimitri.prenom = "Dimitri"
-# dimitri.email = "dimitriwyzlic@gmail.com"
-# dimitri.birthday = datetime.datetime.now()
+# exo = structs.ExercicesInfoData.ExercicesInfoData()
+# exo.date = datetime.datetime.now()
+# exo.exercise = "pompe"
+# exo.difficulty = 4
+# exo.finished = "yes"
+# #exo.id = 1
+# exo.time = datetime.datetime.now()
 #
-# dimitri.save()
-"""
+# exo.save()
+#
+# trainings = structs.ExercicesInfoData.Trainings()
+# trainings.exercices.append(exo)
+# trainings.exercices.append(exo)
+# trainings.exercices.append(exo)
+#
+# trainings.save()
+#
+# # # #Test
+# # import structs.UserInfoData
+# #
+# # dimitri = structs.UserInfoData.UserInfoData()
+# # dimitri.username = "dimitri"
+# # dimitri.password = "pass"
+# # dimitri.nom = "Wyzlic"
+# # dimitri.prenom = "Dimitri"
+# # dimitri.email = "dimitriwyzlic@gmail.com"
+# # dimitri.birthday = datetime.datetime.now()
+# #
+# # dimitri.save()
+# """

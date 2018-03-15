@@ -51,7 +51,7 @@ class GeneralUserInfo(Resource):
         try:
             AdminInfoData.objects.get(username=get_jwt_identity())
             return returnJSON(UserInfoData.objects.all())
-        except Exception as e:
+        except Exception:
             abort(403)
 
     def post(self):
@@ -62,19 +62,19 @@ class GeneralUserInfo(Resource):
 
         try:
             json_data = request.get_json(force=True)
-        except Exception as e:
+        except Exception:
             return "Failed to parse json", 403
 
         newUser = UserInfoData()
 
         try:
             json_data["username"]
-        except Exception as e:
+        except Exception:
             return "Username field not found", 403
         try:
             UserInfoData.objects.get(username=json_data["username"])
             return "User already exist", 403
-        except Exception as e:
+        except Exception:
             try:
                 update_document(newUser, json_data)
             except Exception as e:
@@ -86,6 +86,7 @@ class GeneralUserInfo(Resource):
             try:
                 newUser.save()
             except Exception as e:
+                app_var.app.logger.warning(str(e))
                 return "User already exist or another error", 403
 
             app_var.app.logger.info("New user: " + json_data["username"])

@@ -12,7 +12,7 @@ class Tranings(Resource):
         try:
             d = ExercicesInfoData.objects.all()
             return returnJSON(d)
-        except Exception as e:
+        except Exception:
             abort(403)
 
     # """

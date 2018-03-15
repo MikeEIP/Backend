@@ -28,14 +28,13 @@ class RouteFactory(object, metaclass=SingletonType):
             opt = "/" + self.version + opt
             self.routes[opt] = cl
 
-        else:
-            tmp = ""
-            for opt in optionnalPath:
-                tmp = " /" + self.version + opt
+        tmp = ""
+        for opt in optionnalPath:
+            tmp = " /" + self.version + opt
 
-            self.app.logger.info("\tAdding route " + path + tmp)
-            self.routes[path] = cl
-            self.api.add_resource(cl, path, *optionnalPath)
+        self.app.logger.info("\tAdding route " + path + tmp)
+        self.routes[path] = cl
+        self.api.add_resource(cl, path, *optionnalPath)
 
     def registerWithoutVersion(self, cl: Resource, path: str, *optionnalPath):
         if path in self.routes:
@@ -48,14 +47,13 @@ class RouteFactory(object, metaclass=SingletonType):
         for opt in optionnalPath:
             self.routes[opt] = cl
 
-        else:
-            tmp = ""
-            for opt in optionnalPath:
-                tmp = " " + opt
+        tmp = ""
+        for opt in optionnalPath:
+            tmp = " " + opt
 
-            self.app.logger.info("\tAdding route " + path + tmp)
-            self.routes[path] = cl
-            self.api.add_resource(cl, path, *optionnalPath)
+        self.app.logger.info("\tAdding route " + path + tmp)
+        self.routes[path] = cl
+        self.api.add_resource(cl, path, *optionnalPath)
 
     def giveApp(self, app: Flask, api: Api, version: str):
         self.app = app

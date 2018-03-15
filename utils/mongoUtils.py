@@ -17,8 +17,7 @@ def update_document(document, data_dict):
             fields.GenericReferenceField
         ):
             return field.document_type(**value)
-        else:
-            return value
+        return value
 
     [setattr(
         document, key,
