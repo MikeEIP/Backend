@@ -8,6 +8,9 @@ import app_var
 
 class OauthRoute(Resource):
     def post(self):
+        print(request.authorization)
+        print(request.headers)
+        print(request.data)
         if not request.is_json:
             app_var.app.logger.info("User tried to connect but not provide json")
             return "Missing JSON in request", 400
