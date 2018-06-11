@@ -89,7 +89,7 @@ class GeneralUserInfo(Resource):
 
             minAge = datetime.datetime.now() - datetime.timedelta(days=16*365 + 1)
 
-            userAge = parser.parse(newUser.birthday)
+            userAge = parser.parse(newUser.birthday).replace(tzinfo=None)
 
             if userAge < minAge:
                 return "You must be 16y. old to create an account", 403
