@@ -4,7 +4,7 @@ from mongoengine import StringField, DateTimeField, Document, IntField, ListFiel
 class UserInfoData(Document):
     username = StringField(required=True, unique=True)
     password = StringField(required=True)
-    email = StringField(required=True)
+    email = StringField(required=True, unique=True)
     firstname = StringField(required=True)
     lastname = StringField(required=True)
     birthday = DateTimeField(required=True)

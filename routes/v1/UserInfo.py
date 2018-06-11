@@ -10,6 +10,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from utils.returnJSON import returnJSON
 from structs.AdminData import AdminInfoData
 
+import datetime
+from dateutil import parser
+
 
 class UserInfo(Resource):
     @jwt_required
@@ -80,6 +83,17 @@ class GeneralUserInfo(Resource):
             except Exception as e:
                 app_var.app.logger.info("update document failed " + str(e))
                 return "Not enough field or bad field provided", 400
+
+            if len(newUser.password) <= 8:
+                return "Password len to short", 403
+
+            minAge = datetime.datetime.now() - datetime.timedelta(days=16*365 + 1)
+
+            userAge = parser.parse(newUser.birthday)
+
+            if userAge < minAge:
+                return "You must be 16y. old to create an account", 403
+
             newUser.password = generate_password_hash(json_data["password"])
             newUser.birthday = parser.parse(json_data["birthday"])
 

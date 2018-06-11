@@ -7,8 +7,8 @@
   "mongo": {
     "url": "localhost",
     "port": 27017,
-    "username": "",
-    "password": "",
+    "username": "mike",
+    "password": "mike",
     "db": "mike"
   },
   "security": {
