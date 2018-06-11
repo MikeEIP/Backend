@@ -80,6 +80,8 @@ class GeneralUserInfo(Resource):
             except Exception as e:
                 app_var.app.logger.info("update document failed " + str(e))
                 return "Not enough field or bad field provided", 400
+            if len(json.data["password"]) < 8:
+                return "bad length", 402
             newUser.password = generate_password_hash(json_data["password"])
             newUser.birthday = parser.parse(json_data["birthday"])
 
