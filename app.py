@@ -21,6 +21,15 @@ app_var.app.config['SECRET_KEY'] = c.getField("security", "secret-key")
 app_var.app.config['PROPAGATE_EXCEPTIONS'] = True  # In no debug mode, exceptions throw internal error du to
 # flaskrestful bug
 
+@app_var.app.errorhandler(404)
+def page_not_found(e):
+    out = "<h2>Routes:</h2><br>"
+
+    for r in app_var.routelist:
+        out += " - " + r + "<br>"
+
+    return out, 404
+
 # Mongo
 import utils.mongoConnect
 
@@ -61,6 +70,9 @@ def registerRoutes():
     getRouteFactory().register(routes.v1.oauth.OauthRoute, "/login")
     getRouteFactory().register(routes.v1.Trainings.Tranings, "/trainings")
     getRouteFactory().register(routes.v1.UserInfo.MyUserInfo, "/user/me")
+
+    app_var.routelist = getRouteFactory().routes
+
     print("")
 
 
