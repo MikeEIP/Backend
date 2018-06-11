@@ -78,6 +78,11 @@ class GeneralUserInfo(Resource):
             UserInfoData.objects.get(username=json_data["username"])
             return "User already exist", 403
         except Exception:
+            pass
+        try:
+            UserInfoData.objects.get(email=json_data["email"])
+            return "Mail already exist", 403
+        except Exception:
             try:
                 update_document(newUser, json_data)
             except Exception as e:
@@ -95,7 +100,7 @@ class GeneralUserInfo(Resource):
             print(userAge)
             print(userAge < minAge)
 
-            if userAge < minAge:
+            if userAge > minAge:
                 return "You must be 16y. old to create an account", 403
 
             newUser.password = generate_password_hash(json_data["password"])
