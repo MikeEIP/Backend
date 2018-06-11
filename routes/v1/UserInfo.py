@@ -91,6 +91,10 @@ class GeneralUserInfo(Resource):
 
             userAge = parser.parse(newUser.birthday).replace(tzinfo=None)
 
+            print(minAge)
+            print(userAge)
+            print(userAge < minAge)
+
             if userAge < minAge:
                 return "You must be 16y. old to create an account", 403
 
