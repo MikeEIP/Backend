@@ -16,18 +16,18 @@ Exchange credentials for `access_token`. Supported types:
 
 + Response 200 (application/json)
     + Attributes (OAuth valid response)
+    + Attributes (Server Info)
 
 
 ## User Info [/user/{username}]
 
 + Request
     + Headers
-
-            Authentication: Bearer JWT
+            Authorization: Bearer JWT
 
 + Parameters
     + username (string) - Unique identifier (pseudo) of the user
-        + Default: `theSnoop`
+        + Default: `mike`
 
 ### Get user Info [GET]
 
@@ -121,7 +121,7 @@ Restricted to admin only
 
 + Response 401 (plain/text)
 
-        Forbidden
+        Forbidden to access this user
 
 ### Create account [POST]
 
@@ -134,10 +134,12 @@ Restricted to admin only
 
 + Response 401 (plain/text)
 
-        Forbidden
+        Forbidden to access this user
 
 
 ## Friends [/friends]
+
+PAS IMPLEMENTE DU TOUT
 
 + Request
     + Headers
@@ -149,9 +151,12 @@ Restricted to admin only
 
 + Response 200 (application/json)
     + Attributes (array)
-        +Attributes (UserInfo)
-        +Attributes (UserInfo)
-        +Attributes (UserInfo)
+        + Attributes (UserInfo)
+        + Attributes (UserInfo)
+        + Attributes (UserInfo)
+        
++ Response 404 (application/json)
+    + Attributes (Error message)
 
 + Response 401 (plain/text)
 
@@ -162,10 +167,9 @@ Restricted to admin only
 
 + Request (application/json)
     + Attributes
-        + user: dimitri (string)
+        + username: dimitri (string)
 
 + Response 200 (application/json)
-    + Attributes (UserInfo)
 
 + Response 404 (application/json)
     + Attributes (Error message)
@@ -178,11 +182,9 @@ Restricted to admin only
 
 + Request (application/json)
     + Attributes
-        + user: dimitri (string)
+        + username: dimitri (string)
 
 + Response 200 (application/json)
-
-        Ok
 
 + Response 404 (application/json)
     + Attributes (Error message)
@@ -191,6 +193,57 @@ Restricted to admin only
 
         Forbidden to access this user
 
+
+## All Exercises [/exercises/all]
+
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
+### Get all Exercises [GET]
+
++ Response 200 (application/json)
+    + Attributes (array)
+        + (ExerciseInfo)
+        + (ExerciseInfo)
+
++ Response 401 (plain/text)
+
+        Not logged
+        
+## Exercise [/exercises/{exercise_name}]
+
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
+### Get exercise [GET]
+
++ Response 200 (application/json)
+    + Attributes (ExerciseInfo)
+
++ Response 401 (plain/text)
+
+        Not logged
+        
+## General Exercise [/exercises/]
+
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
+### Create exercise [POST]
+Admin only
+
++ Response 200 (application/json)
+    + Attributes (ExerciseInfo)
+
++ Response 401 (plain/text)
+
+        Not logged
 
 ## Trainings [/training]
 
@@ -213,16 +266,42 @@ Restricted to admin only
 
         Forbidden to access this user
 
-### Return Training [POST]
 
-+ Request (application/json)
-    + Attributes (TrainingInfo)
+## Goals [/goals]
+
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
+### Get Goals [GET]
 
 + Response 200 (application/json)
+    + Attributes (array)
+        + (Goals Info)
+        + (Goals Info)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
 
 + Response 401 (plain/text)
 
-        Forbidden
+        Forbidden to access this user
+
+### Subscribe to Goal [POST]
+
++ Request (application/json)
+    + Attributes
+        + id: 12 (number, required)
+
++ Response 200 (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
 
 
 ## Data Structures
@@ -230,37 +309,62 @@ Restricted to admin only
 ### Error message
 + reason: User not found (string, required)
 
+### Server Info
++ pictureBaseUrl: https://cdn.mike.arrogant.space (string, required)
++ latestAndroidVersion: 1.0.5.2 (string, required)
++ latestIOSVersion: 1.0.4.8 (string, required)
++ needUpdate: boolean (string, required)
+
 ### UserInfo
-+ username: theSnoop (string, required)
-+ lastname: Dog (string, required)
-+ firstname: Snoop (string, required)
-+ email: snoopy_doggydoggy@weed.com (string, required)
++ username: mike (string, required)
++ lastname: Mike (string, required)
++ firstname: Doggy (string, required)
++ email: jean.claude@gmail.com (string, required)
 + birthday: `1992-11-11T08:40:51.620Z` (string, required)
 + country: France (string, optional)
 + city: Nice (string, optional)
 + language: fr_FR (string, required)
 + xp: 42 (number, required)
 + musclor: 542 (number, required)
-+ profilPicture: dimitri_profil.png (string, optional)
++ profilPicture: euorro478473408fojhf38 (string, optional)
 
-### ExercicesInfo
-+ exercise: pompe (string, required)
-+ repetition: 10 (number, optional)
-+ series: 4 (number, optional)
-+ weight: 3 (number, optional)
-+ difficulty: 6 (number, required)
-+ finished: Yes (string, required)
-+ time: 4:10 (string, required)
-+ date: `2018-11-11T08:40:51.620Z` (string, required)
-+ id: 1 (number, required)
+### ExerciseInfo
++ name: pompe (string, required)
++ timePerStep: 10 (number, optional)
++ description: Do {FACTOR} pompes (string, optional)
++ requirements: basictraining, goldpass (array[string], optional)
++ stepValue: 5 (number, required)
++ initialStepNumber: 2 (string, required)
++ tags: endurance, sprint (array[string], optional)
 
 ###TrainingInfo
 + id: 25 (number, required)
-+ exercices: ExercicesInfo, ExercicesInfo (array[ExercicesInfo], required)
++ exercices: ExerciseInfo, ExerciseInfo (array[ExerciseInfo], required)
+
+###Goals Info
++ id: 12 (number, required)
++ title: Cardio (string, required)
++ desc: Cardio help you to ... bla bla bla (string, required)
++ pictureUrl: /pictures/goals/cardio.png (string, required)
+
+###Challenge League Info
++ id: 4452 (number, required)
++ title: Cardio Challenge (string, required)
++ desc: "Do 50 push ups" (string, required)
++ pictureUrl: /pictures/challenges/cardio.png (string, required)
+
+###Leagues Info
++ id: 122465 (number, required)
++ members: UserInfo, UserInfo (array[UserInfo], required)
++ title: TiboInShape Bands (string, required)
++ points: 125 (number, required)
++ rank: 12 (number, required)
++ maxMembers: 30 (number, required)
++ challenge: Challenge League Info (Challenge League Info, required)
 
 ### OAuth grant request (object)
-+ username: theSnoop (string, required)
-+ password: thePass (string, required)
++ username: mike (string, required)
++ password: password (string, required)
 
 ### OAuth valid response (object)
 + access_token: `eyJhbGciOiJIUzI1NiJ9.e30.XmNK3GpH3Ys_7wsYBfq4C3M6goz71I7dTgUkuIa5lyQ` (string, required) - valid JWT
