@@ -139,11 +139,8 @@ Restricted to admin only
 
 ## Friends [/friends]
 
-PAS IMPLEMENTE DU TOUT
-
 + Request
     + Headers
-
             Authentication: Bearer JWT
 
 
@@ -192,6 +189,54 @@ PAS IMPLEMENTE DU TOUT
 + Response 401 (plain/text)
 
         Forbidden to access this user
+        
+## Friends Requests [/friends/requests]
+
++ Request
+    + Headers
+            Authentication: Bearer JWT
+            
+### Get Requests [GET]
+
++ Response 200 (application/json)
+    + Attributes (array)
+        + Attributes (UserInfo)
+        + Attributes (UserInfo)
+        + Attributes (UserInfo)
+        
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
+
+### Accept Request [POST]
+
++ Request (application/json)
+    + Attributes
+        + username: dimitri (string)
+
++ Response 200 (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
+### Reject Request [DELETE]
+
++ Request (application/json)
+    + Attributes
+        + username: dimitri (string)
+
++ Response 200 (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
 
 
 ## All Exercises [/exercises/all]
@@ -212,7 +257,7 @@ PAS IMPLEMENTE DU TOUT
 
         Not logged
         
-## Exercise [/exercises/{exercise_name}]
+## Exercise [/exercises/{exercise_id}]
 
 + Request
     + Headers
@@ -223,6 +268,15 @@ PAS IMPLEMENTE DU TOUT
 
 + Response 200 (application/json)
     + Attributes (ExerciseInfo)
+
++ Response 401 (plain/text)
+
+        Not logged
+        
+### Delete exercise [POST]
+Admin only
+
++ Response 200 (application/json)
 
 + Response 401 (plain/text)
 
@@ -245,7 +299,8 @@ Admin only
 
         Not logged
 
-## Trainings [/training]
+
+## Trainings [/training/{objective_id}]
 
 + Request
     + Headers
@@ -255,9 +310,7 @@ Admin only
 ### Get Trainings [GET]
 
 + Response 200 (application/json)
-    + Attributes (array)
-        + (TrainingInfo)
-        + (TrainingInfo)
+    + Attributes (TrainingInfo)
 
 + Response 404 (application/json)
     + Attributes (Error message)
@@ -267,14 +320,14 @@ Admin only
         Forbidden to access this user
 
 
-## Goals [/goals]
+## Objectives [/objectives]
 
 + Request
     + Headers
 
             Authentication: Bearer JWT
 
-### Get Goals [GET]
+### Get objectives [GET]
 
 + Response 200 (application/json)
     + Attributes (array)
@@ -288,13 +341,49 @@ Admin only
 
         Forbidden to access this user
 
-### Subscribe to Goal [POST]
+## Manage my Objectives [/objectives/{objective_id}]
 
-+ Request (application/json)
-    + Attributes
-        + id: 12 (number, required)
++ Request
+    + Headers
+
+            Authentication: Bearer JWT
+
+### Subscribe to Objective [POST]
 
 + Response 200 (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
+
+### Unsubscribe to Objective [DELETE]
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
+
+## View my Objectives [/objectives/me]
+
++ Request
+    + Headers
+            Authentication: Bearer JWT
+
+### View subscribed Objective [GET]
+
++ Response 200 (application/json)
+    + Attributes (array)
+        + (Goals Info)
+        + (Goals Info)    
 
 + Response 404 (application/json)
     + Attributes (Error message)
