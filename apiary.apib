@@ -136,6 +136,22 @@ Restricted to admin only
 
         Forbidden to access this user
 
+## Survey [/survey]
+
++ Request
+    + Headers
+            Authentication: Bearer JWT
+
+### Post Survey [POST]
+
++ Request (application/json)
+    + Attributes (Survey Info)
+
++ Response 200 (application/json)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
 
 ## Friends [/friends]
 
@@ -300,7 +316,7 @@ Admin only
         Not logged
 
 
-## Trainings [/training/{objective_id}]
+## Trainings [/training]
 
 + Request
     + Headers
@@ -311,6 +327,35 @@ Admin only
 
 + Response 200 (application/json)
     + Attributes (TrainingInfo)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
+
+### Delete Training [DELETE]
+
++ Response 200 (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Error message)
+
++ Response 401 (plain/text)
+
+        Forbidden to access this user
+
+## Trainings Feedback [/trainings/feedback]
+
++ Request
+    + Headers
+            Authentication: Bearer JWT
+
+### Post feedback [POST]
+
++ Response 200 (application/json)
+    + Attributes (FeedbackInfo)
 
 + Response 404 (application/json)
     + Attributes (Error message)
@@ -381,9 +426,7 @@ Admin only
 ### View subscribed Objective [GET]
 
 + Response 200 (application/json)
-    + Attributes (array)
-        + (Goals Info)
-        + (Goals Info)    
+    + Attributes (Goals Info)
 
 + Response 404 (application/json)
     + Attributes (Error message)
@@ -417,24 +460,34 @@ Admin only
 + musclor: 542 (number, required)
 + profilPicture: euorro478473408fojhf38 (string, optional)
 
+### Survey Info
++ weight: 70 (number, required)
++ height: 170 (number, required)
++ sportPerWeek: 2 (number, required)
+
 ### ExerciseInfo
 + name: pompe (string, required)
-+ timePerStep: 10 (number, optional)
 + description: Do {FACTOR} pompes (string, optional)
 + requirements: basictraining, goldpass (array[string], optional)
-+ stepValue: 5 (number, required)
-+ initialStepNumber: 2 (string, required)
++ series: 5 (number, required)
++ repetitions: 5 (number, required)
 + tags: endurance, sprint (array[string], optional)
 
 ###TrainingInfo
 + id: 25 (number, required)
 + exercices: ExerciseInfo, ExerciseInfo (array[ExerciseInfo], required)
 
+###FeedbackInfo
++ curentTrainingID: 1029eys (string, required)
++ cost: 1
++ difficulty: [0.5, 0, 0.3, 0.2, 1] (array[number], required)
++ feeling: [0.5, 0, 0.3, 0.2, 1] (array[number], required)
+
 ###Goals Info
 + id: 12 (number, required)
-+ title: Cardio (string, required)
-+ desc: Cardio help you to ... bla bla bla (string, required)
-+ pictureUrl: /pictures/goals/cardio.png (string, required)
++ name: Cardio (string, required)
++ description: Cardio help you to ... bla bla bla (string, required)
++ tags: musculation, cardio (array[string], required)
 
 ###Challenge League Info
 + id: 4452 (number, required)
